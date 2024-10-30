@@ -28,10 +28,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
     auth: {
       clientId: environment.maslClientID,
-      // authority: 'https://login.microsoftonline.com/fb33e7e1-6a98-4d5a-bd25-f47acf95078a',
       redirectUri: environment.msalRedirectionUrl,
       postLogoutRedirectUri: environment.msalRedirectionUrl,
-      // navigateToLoginRequestUrl: true,
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
