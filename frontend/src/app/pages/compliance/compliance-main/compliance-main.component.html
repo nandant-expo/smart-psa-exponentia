@@ -1,0 +1,220 @@
+<div class="invoices-main-wrapper">
+  <div class="invoices-checked-dont-comply-wrapper">
+    <p class="txt-invoices-checked">
+      Total of <strong>{{ totalInvoices }}</strong> invoices checked
+    </p>
+    <p class="txt-dont-comply">
+      <strong>{{ nonComplyingInvoices }}</strong> invoices don't comply with contracts
+    </p>
+  </div>
+
+  <p class="txt-results-updated-till">
+    Results updated till
+    <strong>
+      {{
+        updatedTill === '—' ? '—' : (updatedTill | date: 'dd LLL y, hh:mm aaa')
+      }}
+    </strong>
+  </p>
+
+  <div class="btn-resolved-unresolved-wrapper">
+    <p-button
+      styleClass="p-button-outlined"
+      [label]="isResolved ? 'Show Unresolved' : 'Show Resolved'"
+      (onClick)="toggleIsResolved()"
+    ></p-button>
+  </div>
+
+  <div class="table-wrapper">
+    <div
+    >
+      <div
+        style="padding: 5px 15px 15px 15px;"
+      >
+        <div class="d-flex align-items-center justify-content-end">
+        </div>
+      </div>
+
+      <p-progressBar
+        *ngIf="loading"
+        mode="indeterminate"
+        [style]="{ height: '6px' }"
+      ></p-progressBar>
+      <p-table
+        #dt1
+        [value]="filteredInvoiceData"
+        [paginator]="true"
+        [rows]="tableRows"
+        [scrollable]="true"
+        [showCurrentPageReport]="true"
+        [styleClass]="'p-datatable-sm'"
+        [globalFilterFields]="
+          [
+            'sr_no',
+            'invoice_no'
+          ]
+        "
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr class="rowbox-wrap">
+            <th
+              pFrozenColumn
+            >
+              Sr. No.
+            </th>
+            <th>
+              Invoice Number
+            </th>
+            <th>
+              Updated On
+            </th>
+            <th>
+              Summary
+            </th>
+            <th>Actions</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-td let-i="rowIndex">
+          <tr class="rowbox-wrap">
+            <!-- Sr. No. -->
+            <td
+              pFrozenColumn
+              [title]="(i+1) || '—'"
+            >
+              <div class="d-flex">
+                <div>&nbsp;{{ (i+1) || '—'}}</div>
+              </div>
+            </td>
+
+            <!-- Invoice No. -->
+            <td
+              pFrozenColumn
+              [title]="td?.invoice_id|| '—'"
+            >
+              {{ td?.invoice_id|| '—' }}
+            </td>
+
+            <!-- Updated On -->
+            <td
+              class="minimize-text"
+              [title]="(td?.invoice_date | date: 'dd-MM-YYYY') || '—'"
+            >
+              {{ (td?.invoice_date | date: 'dd-MM-YYYY') || '—'}}
+            </td>
+
+            <!-- Summary -->
+            <td
+              style="cursor: pointer;"
+              [title]="td?.invoice_title || '—'"
+              (click)="openDialog(i)"
+            >
+              {{ td?.invoice_title || '—' }}
+            </td>
+
+            <!-- Actions -->
+            <td>
+              <div
+                class="d-flex align-items-center"
+                style="gap: 15px"
+              >
+                <i
+                  class="pi pi-check-circle"
+                  style="color: #F36C4E; cursor: pointer; font-size: 1rem;"
+                  *ngIf="!isResolved"
+                  (click)="resolveInvoiceFromApi(td)"
+                ></i>
+                
+                <div style="cursor:pointer">
+                  <a
+                    placement="bottom"
+                    [container]="'body'"
+                    [ngbPopover]="popContent"
+                  >
+                    <i class="pi pi-trash" style="font-size: 1rem; color: #d9342b"></i>
+                  </a>
+
+                  <ng-template
+                    #popContent
+                  >
+                    <div>Are you sure you want to <b>delete</b> the invoice?</div>
+                    <div class="d-flex align-items-center py-1" style="justify-content: center;">
+                      <p-button
+                        label="YES"
+                        styleClass="p-button-sm p-button-xs p-button-danger me-3"
+                        (click)="deleteInvoice(td)"
+                      ></p-button>
+                      <p-button label="NO"
+                        styleClass="p-button-sm p-button-xs p-button-outlined p-button-secondary"></p-button>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4">No records found</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+
+  <div class="dialog-wrapper">
+    <p-dialog
+      header="Invoice Details"
+      [appendTo]="invoiceDialog"
+      [modal]="true"
+      [blockScroll]="true"
+      [dismissableMask]="true"
+      [draggable]="false"
+      [(visible)]="isDialogVisible"
+    >
+      <div class="analysis-wrapper">
+        <p class="txt-analysis-for-invoice">
+          Analysis for Invoice number: {{ filteredInvoiceData[invoiceIndex]?.invoice_id }}
+        </p>
+
+        <p class="txt-descrepancies">
+          <strong>Discrepancies in Invoice:</strong>
+        </p>
+        <div
+          style="margin: 15px 0 0 0;"
+          *ngFor="let descrepancy of filteredInvoiceData[invoiceIndex]?.discrepancies"
+        >
+          <span>Invoice Number: </span>
+          <span>{{ descrepancy?.invoice_no ?? '—' }}</span>
+          <div
+            style="margin: 10px 0 0 0;"
+            *ngFor="let descrepancy2 of descrepancy?.discrepancies"
+          >
+            <span>{{ descrepancy2?.discrepancy_name ?? '—' }}:</span>
+            <span>
+              {{ descrepancy2?.discrepancy_description ?? '—' }}
+            </span>
+          </div>
+        </div>
+        
+        <p class="txt-missing-details">
+          <strong>Missing Details in Invoice:</strong>
+        </p>
+        <div
+          *ngFor="let discrepancy of filteredInvoiceData[invoiceIndex]?.discrepancies"
+        >
+          <div
+            *ngFor="let missingDetail of discrepancy?.missing_details"
+          >
+            <span>{{ missingDetail?.detail_name }}:</span>
+            <span>
+              {{ missingDetail.detail_description }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </p-dialog>
+    <div #invoiceDialog></div>
+  </div>
+</div>
+<p-toast></p-toast>

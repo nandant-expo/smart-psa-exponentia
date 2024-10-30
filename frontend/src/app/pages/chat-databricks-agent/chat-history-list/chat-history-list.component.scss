@@ -1,0 +1,130 @@
+.flex-parent {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+  .long-and-truncated {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+
+.chat-history-list{
+    background: lightgray;
+}
+.list{
+    height: calc(100vh - 30vh);
+    width: 243px;
+    flex-direction: column; 
+    row-gap: 10px;
+    overflow-y: scroll;
+    padding: 0px 6px;
+    .head-title{
+        font-size: 12px;
+        padding: 0px 6px;
+    }
+    .title{
+        font-size: 14px;
+    }
+}
+.list::-webkit-scrollbar {
+scroll-padding-bottom: unset;
+}
+.list::-webkit-scrollbar-corner { background: transparent; }
+
+.chat-row{
+    background: darkgray;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+    i{
+        display: none;
+    }
+    i:hover{
+        color: #d9342b; //#f3694b;
+    }
+}
+.chat-row:hover{
+    background: #F36C4E;
+    color: #ffffff !important;
+}
+.active{
+    background: #F36C4E;
+    color: #ffffff;
+    i{
+        display: inline-block !important;
+    }
+}
+
+
+@media (max-width: 1920px) {
+    .list{
+        width:343px;
+    }
+}
+
+@media (max-width: 1800px) {
+    .list{
+        width:321px;
+    }
+}
+@media (max-width: 1700px) {
+    .list{
+        width:304px;
+    }
+}
+
+@media (max-width: 1600px) {
+    .list{
+        width:287px;
+    }
+}
+
+@media (max-width: 1500px) {
+    .list{
+        width:267px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .list{
+        width:243px;
+    }
+}
+
+
+@media (max-width: 1300px) {
+    .list{
+        width:216px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .list{
+        width:200px;
+    }
+}
+
+:host ::ng-deep {
+  // Override PrimeNG styles
+
+  .btn-new-chat-wrapper {
+    .p-button,
+    .p-button:hover {
+      background: #F36C4E;
+      border: 1px solid #F36C4E;
+    }
+
+    .p-button.p-button-help:enabled:focus {
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+    }
+
+    .mob-new-chat {
+      display: flex;
+      gap: 10px;
+      padding: 5px 25px 10px 20px;
+    }
+  }
+}

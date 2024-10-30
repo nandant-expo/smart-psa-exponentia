@@ -1,0 +1,195 @@
+/* start resizer */
+.splitter {
+  border-top-right-radius: 18px;
+    width: 100%;
+    height: auto;
+    display: flex;
+}
+
+#separator {
+    cursor: col-resize;
+    background-color: #fff; // #7C3AED
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: calc(100vh - 16vh);
+    /* Prevent the browser's built-in drag from interfering */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#first {
+    width: 70%;
+    height: auto;
+    min-width: 10px;
+    max-height: calc(100vh - 139px);
+}
+
+.first-100{
+    width: 100% !important; 
+}
+
+#second {
+    width: 30%;
+    height: auto;
+    min-width: 10px;
+}
+/* end resizer */
+
+.title-20-600{
+    font-size: 20px;font-weight: 600;
+}
+.emptyerror{
+    color: #726b6b;
+    font-size: 16px;
+    font-weight: 500;
+    font-style: italic;
+    background: #e5dfdf;
+    padding: 4px 15px;
+}
+.text-resizer{
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 1600px;
+    overflow: hidden;
+}
+.export-chat:hover{
+    color: #F36C4E !important;
+}
+.source-btn{
+    background: #FBF4FF;
+    border: 1px solid #F36C4E;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px;
+    color: #F36C4E;
+    font-weight: 600;
+}
+.source-btn:hover{
+    background: #F36C4E;
+    color: #fff;
+}
+.chat-message-box{
+    .chat-pannel{
+        background: #fff;
+        border-radius: 18px;
+        padding: 20px 20px 0px 20px;
+        display: flex;
+        overflow: hidden;
+        flex-direction: column;
+        justify-content: space-between;
+        .message-box{
+            height: calc(90vh - 9.5vh);
+            padding: 4px 20px 20px 20px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            .message-list{
+                height: calc(80vh - 106px);
+                overflow:scroll;
+            }
+            .fab-container{
+                position:relative;
+                // bottom: 13%;
+                cursor:pointer;
+                z-index: 9;
+                text-align: center;
+                i{
+                    font-size: 24px;
+                    color: #F36C4E;
+                }
+            }
+            .spinner-border-custom{
+                --bs-spinner-width: 1.5rem !important;
+                --bs-spinner-height: 1.5rem !important;
+            }
+            /* width */
+            .message-list::-webkit-scrollbar {
+                width: 5px;
+                height: 5px;
+            }
+
+            /* Handle */
+            .message-list::-webkit-scrollbar-thumb {
+                background: darkgray;
+                border-radius: 10px;
+            }
+
+            /* Handle on hover */
+            .message-list::-webkit-scrollbar-thumb:hover {
+                background: #F36C4E;
+            }
+
+            .message-list::-webkit-scrollbar-corner { background: transparent; }
+        }
+    }
+    .chat-pannel-100{
+        width: 100% !important; 
+    }
+    .chat-pannel-0-right-padding{
+        padding: 20px 0px 0px 20px !important; 
+    }
+    .citation-pannel{
+        flex: 0 0 32%;
+        background: #fff;
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
+        padding: 20px 20px 0px 0px;
+        #resize {
+            background-color: #ccc;
+            position: absolute;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            cursor: w-resize;
+        }
+        .citation-head{
+            align-items: center;
+            background: lightgray;
+            padding: 4px 20px 4px 20px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+        }
+
+        .image-box{
+            height: calc(100vh - 199px);
+            border: 1px solid #E5E5E5;
+
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+            .container-box {
+                width: 100%;
+                padding: 0px !important;
+                aspect-ratio: 4/10;
+            }
+        }
+        .image-box::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        /* Handle */
+        .image-box::-webkit-scrollbar-thumb {
+            background: darkgray;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        .image-box::-webkit-scrollbar-thumb:hover {
+            background: #F36C4E;
+        }
+    }
+}
+
+.curve-top-bottom-right-borders {
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}

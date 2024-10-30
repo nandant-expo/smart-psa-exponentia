@@ -1,0 +1,229 @@
+.mobile-spinner-wrapper {
+  background: #fff;
+  box-shadow: 0 4px 4px 0 rgba(192, 154, 244, 0.5);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 15px 30px 35px 40px;
+
+  @media (min-width: 1024px) {
+    display: none;
+  }
+
+  .txt-loading-percent {
+    color: #7C3AED;
+    font-size: 20px;
+    font-weight: 600;
+    position: absolute;
+    top: 25%;
+    left: 45%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .txt-loading {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 5px 0 0 0;
+  }
+}
+
+.desktop-spinner-wrapper {
+  // For MOBILE and above
+  display: none;
+  
+  @media (min-width: 1024px) {
+    // For Laptop and above
+    display: flex;
+    flex: 0 0 50%;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.chat-message-box {
+  width: 100%;
+
+  .chat-pannel {
+    display: flex;
+    background: #fff;
+    border-top-left-radius: 18px;
+    border-bottom-left-radius: 18px;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    @media (min-width: 1024px) {
+      height: calc(100vh - 16.5vh);
+      padding: 0px 40px 20px 40px;
+    }
+    
+    .create-box {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      row-gap: 10px;
+      padding: 0 25px;
+      // subtract height of mobile header, question textbox and footer
+      max-height: calc(100vh - 200px);
+      overflow-y: scroll;
+
+      @media (min-width: 1024px) {
+        max-height: unset;
+        overflow-y: unset;
+        padding: 0;
+        row-gap: 20px;
+      }
+
+      .txt-welcome {
+        color:#F36C4E;
+        font-size: 18px;
+        font-weight: 700;
+        
+        @media (min-width: 1024px) {
+          font-size: 24px;
+        }
+      }
+
+      .txt-assist {
+        font-size: 16px;
+        color: #00000096;
+        font-weight: 500;
+        
+        @media (min-width: 1024px) {
+          font-size: 20px;
+        }
+      }
+
+      .txt-ask {
+        font-size: 16px;
+        color: #000000B2;
+        font-weight: 600;
+        
+        @media (min-width: 1024px) {
+          font-size: 20px;
+        }
+      }
+
+      .txt-greetings {
+        color:#805FAF;
+        font-size: 20px;
+        font-weight: 700;
+        
+        @media (min-width: 1024px) {
+          font-size: 24px;
+        }
+      }
+
+      .txt-ask-me-anything {
+        color: rgba(0, 0, 0, 0.6);
+        font-size: 15px;
+        font-weight: 600;
+
+        @media (min-width: 1024px) {
+          font-size: 20px;
+          color: #000000B2;
+        }
+      }
+      
+      .document-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        @media (min-width: 1024px) {
+          flex-direction: row;
+        }
+
+        .txt-or {
+          color: #000000B2;
+          font-size: 18px;
+          
+          @media (min-width: 1024px) {
+            font-size: 20px;
+          }
+        }
+
+        .btn-local {
+          // For MOBILE and above
+          padding: 10px 15px !important;
+          font-size: 16px;
+          justify-content: center !important;
+          width: 100% !important;
+          
+          @media (min-width: 1024px) {
+            // For LAPTOP and above
+            padding: 6px 82px !important;
+            font-size: 20px;
+            justify-content: unset !important;
+            width: unset !important;
+          }
+        }
+        
+        .btn-existing{
+          // For MOBILE and above
+          padding: 10px 15px !important;
+          font-size: 16px;
+          
+          @media (min-width: 1024px) {
+            // For LAPTOP and above
+            padding: 6px 40px !important;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    .ask-a-question-wrapper {
+      position: fixed;
+      bottom: 50px;
+      padding: 0 25px;
+
+      @media (min-width: 1024px) {
+        position: unset;
+        bottom: unset;
+      }
+    }
+  }
+}
+
+.img-res-block {
+  max-width: 100px;
+  max-height: 100px;
+  
+  @media (min-width: 1024px) {
+    max-width: 80px;
+    max-height: 80px;
+  }
+}
+
+.curve-top-bottom-right-borders {
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+}
+
+:host ::ng-deep {
+  .btn-choose-from-device-wrapper {
+    .p-button,
+    .p-button:hover {
+      background: #F36C4E;
+      border: 1px solid #F36C4E;
+    }
+
+    .p-button.p-button-help:enabled:focus {
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+    }
+  }
+
+  .btn-choose-from-existing-files-wrapper {
+    .p-button,
+    .p-button:hover {
+      color: #F36C4E !important;
+    }
+
+    .p-button.p-button-help:enabled:focus {
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+    }
+  }
+}

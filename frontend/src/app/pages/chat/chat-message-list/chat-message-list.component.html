@@ -1,0 +1,190 @@
+<div class="chat-msg-list-main-wrapper">
+  <ng-container *ngFor="let message of messageList;let i = index;">
+      <div *ngIf="message?.role == 'user'" style="white-space: pre-wrap;" class="sent" [innerHTML]="message?.data[0]?.content"></div>
+      <div style="display: flex;flex-direction: column;">
+          <div *ngIf="message?.role == 'assistant'" class="received">
+              <div class="d-flex" style="flex-direction: column;row-gap: 20px;">
+                  <div style="white-space: pre-wrap;">
+                      <ng-container *ngFor="let items of message.data">
+                          <div class="d-flex" style="align-items: center;column-gap: 10px;" *ngIf="message?.error">
+                              <span  style="color: #ff0000;font-size: 20px;font-weight: 600;"><i class="pi pi-exclamation-circle"></i></span>
+                              <span class="summary" [innerHTML]="items?.content"></span>
+                              <button pButton type="button" class="p-button-sm p-button-xs p-button-help p-button-text"
+                              style="padding: 0px !important;" (click)="retryQuery()"><svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-3 w-3 flex-shrink-0" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="1 4 1 10 7 10"></polyline><polyline points="23 20 23 14 17 14"></polyline><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path></svg>&nbsp;Retry
+                          </button>
+                          </div>
+                          <span *ngIf="!message?.error" class="summary" [innerHTML]="items?.content"></span>
+                          <ng-container *ngIf="chatFlow == 'general'"><ng-container *ngFor="let citation of items.citations"><span class="citation-badge" (click)="openCitation(citation, lastIndex+i)">{{citation?.citation_num}}</span></ng-container></ng-container>
+                          <ng-container *ngIf="chatFlow != 'general'"><ng-container *ngFor="let citation of items.citations"><span class="citation-badge" (click)="openCitation(citation, lastIndex+i)" [pTooltip]="'Scroll to page '+ citation?.citation_num">{{citation?.citation_num}}</span></ng-container></ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="message?.summary != ''">
+                          <span class="summary" [innerHTML]="message?.summary"></span>
+                      </ng-container>
+                  </div>
+                  <ng-container *ngIf="!message?.error">
+                  <div class="d-flex" style="column-gap: 10px;" *ngIf="message?.citations.length != 0 && chatFlow == 'general'">
+                      <div style="font-size: 14px;font-weight: 600;">Citations:</div>
+                      <div class="d-flex citation-box" >
+                          <ng-container  *ngFor="let citationitem of message?.citations">
+                          <div  (click)="openCitation(citationitem, lastIndex+i)">
+                              {{citationitem?.citation_num+". "+citationitem?.name}} 
+                          </div>
+                          </ng-container>
+                      </div>
+                  </div>
+                  <div class="d-flex" style="column-gap: 10px;flex-wrap: wrap;row-gap: 10px;" *ngIf="message?.keywords.length != 0 && chatFlow != 'general'">
+                      <div style="font-size: 14px;font-weight: 600;">Key Topics:</div>
+                      <ng-container *ngFor="let row of message?.keywords; let i = index">
+                          <div class="recomm-chip">{{row}}</div>
+                      </ng-container>
+                  </div> 
+                  <div class="d-flex" style="flex-direction: column;column-gap: 10px;flex-wrap: wrap;row-gap: 10px;" *ngIf="message?.sample_questions.length != 0">
+                      <div style="font-size: 14px;font-weight: 600;">Consider these inquiries below that may arise</div>
+                      <div class="d-flex" style="flex-direction: column;row-gap: 10px;">
+                      <ng-container *ngFor="let row of message?.sample_questions; let i = index">
+                          <div style="color: #F36C4E;font-size: 14px;cursor: pointer;" (click)="raiseQuery(row)">{{row}}</div>
+                      </ng-container>
+                      </div>
+                  </div> 
+                  </ng-container>
+              </div>
+          </div>
+          <div
+            *ngIf="message?.role == 'assistant'"
+            style="margin-left: 10px; margin-bottom: 16px;"
+          >
+              <div class="feedback">
+                  <div
+                    *ngIf="message?.feedback == 2 || message?.feedback == 0"
+                    class="like"
+                    [ngClass]="{'disabled': message?.feedback == 0}"
+                    (click)="sendFeedback($event, lastIndex+i, i, 1, likeOp)"
+                  >
+                    <img src="./assets/img/like-border.svg" />
+                  </div>
+                  <div
+                    *ngIf="message?.feedback == 1"
+                    style="padding: 0px 4px 4px 4px;"
+                  >
+                    <img src="./assets/img/like-filled.svg" />
+                  </div>
+                  <div
+                    *ngIf="message?.feedback == 2 || message?.feedback == 1"
+                    class="dislike"
+                    [ngClass]="{'disabled': message?.feedback == 1}"
+                    (click)="sendFeedback($event, lastIndex+i, i, 0, dislikeOp)"
+                  >
+                    <img src="./assets/img/dislike-border.svg" />
+                  </div>
+                  <div
+                    *ngIf="message?.feedback == 0"
+                    style="padding: 0px 4px 4px 4px;"
+                  >
+                    <img src="./assets/img/dislike-filled.svg" />
+                  </div>
+              </div>
+
+              <p-overlayPanel
+                #likeOp
+                [appendTo]="likeOpDiv"
+                [showCloseIcon]="true"
+                (onHide)="onLikeOpHide(i)"
+              >
+                <p class="txt-response-correct">
+                  Response was correct
+                </p>
+                <p class="txt-tell-more">
+                  Tell us more:
+                </p>
+                <form
+                  [formGroup]="likeForm"
+                  (ngSubmit)="likeOp.hide(); submitLikeForm($event, lastIndex+i, 1, thankYouOp)"
+                >
+                  <div class="correct-response-specific-details-input-wrapper">
+                    <input
+                      pInputText
+                      type="text"
+                      formControlName="likeDetails"
+                      placeholder="(Optional) Please feel free to add any specific details."
+                    />
+                  </div>
+                  <div class="btn-submit-wrapper">
+                    <button>
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </p-overlayPanel>
+              <div
+                #likeOpDiv
+                class="like-op-wrapper"
+              ></div>
+              
+              <p-overlayPanel
+                #dislikeOp
+                [appendTo]="dislikeOpDiv"
+                [showCloseIcon]="true"
+                (onHide)="onDislikeOpHide(i)"
+              >
+                <p class="txt-how-response">
+                  How was the response?
+                </p>
+                <div class="dislike-form-wrapper">
+                  <form
+                    [formGroup]="dislikeForm"
+                    (ngSubmit)="dislikeOp.hide(); submitDislikeForm($event,lastIndex+i, 0, thankYouOp)"
+                  >
+                    <div class="btn-incorrect-partially-correct-wrapper">
+                      <p-selectButton
+                        [options]="stateOptions"
+                        formControlName="incorrectPartiallyCorrect"
+                        optionLabel="label"
+                        optionValue="value"
+                      ></p-selectButton>
+                    </div>
+                    <p class="txt-tell-us-more">
+                      Tell us more:
+                    </p>
+                    <div class="dislike-input-wrapper">
+                      <input
+                        pInputText
+                        type="text"
+                        formControlName="dislikeDetails"
+                        placeholder="(Optional) Please feel free to add any specific details."
+                      />
+                    </div>
+                    <div class="btn-submit-wrapper">
+                      <button>
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </p-overlayPanel>
+              <div
+                #dislikeOpDiv
+                class="dislike-op-wrapper"
+              >
+              </div>
+
+              <p-overlayPanel
+                #thankYouOp
+                [appendTo]="thankYouOpDiv"
+              >
+                <p class="txt-thank-you">
+                  Thank you for your feedback!
+                </p>
+              </p-overlayPanel>
+              <div
+                #thankYouOpDiv
+                class="thank-you-op-wrapper"
+              >
+              </div>
+          </div>
+      </div>
+  </ng-container>
+  <div *ngIf="querySent" class="received">
+      <img src="./assets/img/message_loader_2.gif" style="max-width: 80px; max-height: 40px;"  />
+  </div>
+</div>
+<p-toast></p-toast>

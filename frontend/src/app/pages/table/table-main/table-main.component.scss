@@ -1,0 +1,37 @@
+.table-main-wrapper {
+  background: #fff;
+  border-radius: 18px;
+  margin: 5px;
+
+  .check-upto-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+
+    .upto-wrapper {
+      .txt-date {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .table-wrapper {
+    margin: 30px 0 0 0;
+  }
+}
+
+:host ::ng-deep {
+  .table-main-wrapper {
+    .table-wrapper {
+      ::-webkit-scrollbar-thumb,
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #F36C4E;
+      }
+
+      .p-paginator {
+        padding: 0;
+      }
+    }
+  }
+}

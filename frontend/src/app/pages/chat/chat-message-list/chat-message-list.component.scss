@@ -1,0 +1,357 @@
+.chat-msg-list-main-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.sent {
+  align-self: flex-end;
+  background: #F36C4E;
+  color: #fff;
+  font-size: 14px;
+  padding: 10px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 16px;
+  margin-bottom: 16px;
+  max-width: 80%;
+}
+
+.received {
+  align-self: flex-start;
+  background: #ffffff;
+  border: 1px solid black;
+  padding: 15px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+  margin-bottom: 16px;
+  max-width: 80%;
+  
+  .recomm-chip {
+    background: #F36C4E;
+    color: #fff;
+    border-radius: 16px;
+    font-size: 14px;
+    padding: 2px 10px 2px 10px;
+  }
+  
+  img {
+    max-width: 63px;
+  }
+
+  .citation-box {
+    flex-wrap: wrap;
+    column-gap: 15px;
+    row-gap: 12px;
+    
+    div {
+      box-shadow: 0px 4px 4px 0px #C09AF442;
+      font-size: 12px;
+      padding: 2px 12px;
+      border-radius: 6px;
+      color: #F36C4E;
+      background: #ffd8a8;
+      cursor: pointer;
+    }
+  }
+
+  .summary {
+    color: #000;
+    font-size: 14px;
+    
+    div {
+      width:10px;
+      height: 10px;
+      background: #000;
+      border-radius: 5px;
+      animation: blink 1s infinite;
+    }
+  }
+
+  .citation-badge{
+    display: inline-block;
+    text-align: center;
+    background: #F36C4E;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 6px;
+  }
+}
+
+.box {
+  display: inline-flex;
+  align-items: flex-end;
+}
+
+.feedback {
+    display: inline-flex;
+    align-items: center;
+    
+    .like {
+      cursor: pointer;
+      padding: 0px 4px 4px 4px;
+
+      &:hover {
+        background: lightgray;
+        border-radius: 8px;
+      }
+    }
+
+    .dislike {
+      cursor: pointer;
+      padding: 0px 4px 4px 4px;
+
+      &:hover {
+        background: lightgray;
+        border-radius: 8px;
+      }
+    }
+}
+
+.like-op-wrapper {
+  .txt-response-correct {
+    color: #0BDA51;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+  }
+
+  .txt-tell-more {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+    margin: 20px 0 0 0;
+  }
+
+  .correct-response-specific-details-input-wrapper {
+    margin: 15px 0 0 0;
+  }
+}
+
+.dislike-op-wrapper {
+  .txt-how-response {
+    // For MOBILE and above
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0;
+    margin: 0;
+    
+    @media (min-width: 1024px) {
+      // For LAPTOP and above
+      font-size: 16px;
+    }
+  }
+
+  .dislike-form-wrapper {
+    margin: 25px 0 0 0;
+
+    .txt-tell-us-more {
+      // For MOBILE and above
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 0;
+      margin: 25px 0 0 0;
+      
+      @media (min-width: 1024px) {
+        // For LAPTOP and above
+        font-size: 16px;
+      }
+    }
+
+    .dislike-input-wrapper {
+      margin: 15px 0 0 0;
+    }
+  }
+}
+
+.thank-you-op-wrapper {
+  .txt-thank-you {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+// Common Styles
+
+.btn-submit-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    // For MOBILE and above
+    background: #F36C4E;
+    border: 1px solid #F36C4E;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px 8px;
+    margin: 25px 0 0 0;
+    
+    @media (min-width: 1024px) {
+      // For LAPTOP and above
+      font-size: 16px;
+    }
+  }
+}
+
+.disabled {
+  cursor: not-allowed !important;
+
+  &:hover {
+    background: inherit !important;
+    border-radius: inherit !important;
+  }
+}
+
+:host ::ng-deep {
+  // Override PrimeNG styles
+
+  .like-op-wrapper,
+  .dislike-op-wrapper {
+    .p-overlaypanel {
+      // For MOBILE and above
+      position: relative;
+      top: unset !important;
+      width: 100%;
+      
+      @media (min-width: 1024px) {
+        // For LAPTOP and above
+        width: 75%;
+      }
+
+      .p-overlaypanel-close {
+        background: none;
+        color: #000;
+        top: 1%;
+        right: 1%;
+      }
+
+      .p-overlaypanel-content {
+        padding: 20px 25px 25px 25px;
+      }
+    }
+  }
+
+  .like-op-wrapper {
+    .p-overlaypanel {
+      // For MOBILE and above
+      left: -3% !important;
+      
+      @media (min-width: 1024px) {
+        // For DESKTOP and above
+        left: -1% !important;
+      }
+    }
+  }
+  
+  .dislike-op-wrapper {
+    .p-overlaypanel {
+      // For MOBILE and above
+      left: 9% !important;
+      width: 88%;
+      
+      @media (min-width: 1024px) {
+        // For LAPTOP and above
+        left: 3% !important;
+      }
+    }
+
+    .dislike-form-wrapper {
+      .btn-incorrect-partially-correct-wrapper {
+        .p-button-label {
+          // For LAPTOP and above
+          color: rgba(0, 0, 0, 0.6);
+          font-size: 14px;
+          font-weight: 600;
+
+          @media (min-width: 1024px) {
+            // For LAPTOP and above
+            font-size: 16px;
+          }
+        }
+
+        .p-buttonset .p-button {
+          border: 1px solid rgba(0, 0, 0, 0.12);
+          border-radius: 7px;
+          padding: 6px 10px;
+        }
+
+        .p-selectbutton.p-buttonset {
+          // For MOBILE and above
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+
+          @media (min-width: 1024px) {
+            // For LAPTOP and above
+            flex-direction: row;
+          }
+        }
+
+        .p-selectbutton .p-button.p-highlight {
+          background: #fff;
+          background-color: #fff;
+          border: 1px solid #F36C4E;
+
+          span {
+            color: #F36C4E;
+          }
+        }
+
+        .p-button:focus {
+          box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+        }
+      }
+
+      .dislike-input-wrapper {
+        .p-inputtext {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .thank-you-op-wrapper {
+    .p-overlaypanel {
+      // For MOBILE and above
+      position: relative;
+      top: unset !important;
+      left: unset !important;
+      width: 100%;
+      
+      @media (min-width: 1024px) {
+        // For LAPTOP and above
+        width: 75%;
+      }
+
+      &::before,
+      &::after {
+        display: none;
+      }
+
+      .p-overlaypanel-content {
+        padding: 15px 25px 15px 25px;
+      }
+    }
+  }
+
+  .correct-response-specific-details-input-wrapper {
+    .p-inputtext {
+      width: 100%;
+    }
+  }
+}

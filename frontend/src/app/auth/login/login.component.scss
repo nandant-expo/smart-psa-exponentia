@@ -1,0 +1,61 @@
+.flex-wrapper {
+  min-height: 100vh;
+  align-content: center !important;
+  row-gap: 20px;
+}
+.box1{
+  background-color: #F36C4E;
+  background-image: url('../../../assets/img/login-cover.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  flex: 0 0 49.999%;
+}
+.box2{
+  flex: 0 0 49.999%;
+  gap: 60px;
+}
+
+.logo-box{
+  width: 20%;
+}
+.info-box{
+  padding: 4%;
+  border-top: 2px solid #9857F2;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-items: center;
+  box-shadow: 0px 4px 13px 7px rgba(234, 247, 255, 0.64);
+}
+
+@media (max-width: 960px) {
+  .flex-wrapper {
+    flex-wrap: wrap;
+    align-content: start !important;
+  }
+  .box1{
+    flex: 0 0 100%;
+    min-height: 90px;
+  }
+  .box2{
+    flex: 0 0 100%;
+  }
+  .logo-box{
+    width: 50%
+  }
+
+}
+
+:host ::ng-deep {
+  .btn-sign-in-with-microsoft-wrapper {
+    .p-button,
+    .p-button:hover {
+      border: 1px solid #F36C4E;
+    }
+
+    .p-button:focus {
+      box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+    }
+  }
+}

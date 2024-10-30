@@ -1,0 +1,106 @@
+.invoices-main-wrapper {
+  background: #fff;
+  border-radius: 18px;
+  padding: 15px;
+  margin: 5px;
+
+  .invoices-checked-dont-comply-wrapper {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+
+    .txt-invoices-checked,
+    .txt-dont-comply {
+      border: 1px solid #F36C4E;
+      padding: 15px;
+      margin: 0;
+
+      strong {
+        color: #F36C4E;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .txt-results-updated-till {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+    margin: 15px 0 0 0;
+    padding: 0 90px 0 0;
+
+    strong {
+      color: #F36C4E;
+      font-size: 18px;
+    }
+  }
+
+  .btn-resolved-unresolved-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 15px 0 0 0;
+  }
+  
+  .table-wrapper {
+    margin: 15px 0 0 0;
+  }
+
+  .dialog-wrapper {
+    .analysis-wrapper {
+      .txt-analysis-for-invoice {
+        margin: 0;
+      }
+
+      .txt-descrepancies {
+        margin: 15px 0 0 0;
+      }
+
+
+      .txt-missing-details {
+        margin: 15px 0 0 0;
+      }
+
+      .missing-details-list-wrapper {
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: 30px 15px;
+      }
+    }
+  }
+}
+
+:host ::ng-deep {
+  // Override PrimeNG styles
+
+  .invoices-main-wrapper {
+    .table-wrapper {
+      .p-progressbar .p-progressbar-value {
+        background: #F36C4E;
+      }
+    }
+
+    .btn-resolved-unresolved-wrapper {
+      .p-button.p-button-outlined {
+        color: #F36C4E;
+        border: 1px solid #F36C4E;
+        padding: 5px 10px;
+      }
+
+      .p-button:focus {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #F36C4E, 0 1px 2px 0 black;
+      }
+
+      .p-button.p-button-outlined:enabled:hover {
+        background: #fff;
+      }
+    }
+
+    .dialog-wrapper {
+      .p-dialog {
+        max-width: 50%;
+      }
+    }
+  }
+}

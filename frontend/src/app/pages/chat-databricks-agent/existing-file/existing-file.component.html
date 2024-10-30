@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between" style="align-items: center;">
+    <div>
+        <div class="title"> Select The Table</div>  
+    </div>
+    <div class="p-2" style="cursor: pointer;">
+        <div class="p-button-sm p-button-text"  class="close" aria-label="Close" (click)="closeModal('cancel')">
+        <i class="pi pi-times"></i>
+        </div>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="d-flex" style="flex-direction: column;row-gap: 20px;">
+    <div>
+        <span class="p-input-icon-left ml-auto col-md-4 col-sm-12"> 
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" class="p-inputtext-sm form-control" (keypress)="searchItem($event)" (keyup)="searchItem($event); dt1.filterGlobal(serachStr, 'contains')" placeholder="Search by Table Name" />
+        </span>
+    </div>
+    <p-progressBar *ngIf="loading"  mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+    <p-table
+        #dt1
+        [value]="fileData"
+        [scrollable]="true"
+        scrollHeight="calc(100vh - 42vh)"
+        [paginator]="false"
+        [rows]="6"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '50rem' }"
+        [styleClass]="'p-datatable-sm'"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [globalFilterFields]="['table_name']"
+        >
+        <ng-template pTemplate="header">
+            <tr class="rowbox-wrap table-headers">
+                <th pSortableColumn="table_name" style="width:30%;font-size: 14px;" alignFrozen="left" pFrozenColumn [frozen]="true" >Table Name <p-sortIcon field="table_name"></p-sortIcon></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-table>
+            <tr class="rowbox-wrap row-tr" [ngClass]="{'active': table._id == selectedFile}"  (click)="selectFile(table._id)">
+                <td alignFrozen="left" pFrozenColumn [frozen]="true" class="minimize-text" title="{{table.table_name}}">{{table.table_name}}</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="3">No records found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div>
+        <div class="d-flex justify-content-end">
+            <button pButton type="button" label="Ok" [disabled]="selectedFile == null" class="p-button-sm p-button-help me-2" style="padding: 6px 40px !important;" (click)="closeModal({id: this.selectedFile})"></button>
+            <button pButton type="button" label="Cancel" class="p-button-sm p-button-outlined" style="padding: 6px 20px !important;" (click)="closeModal('cancel')"></button>
+        </div>
+    </div>
+    </div>
+</div>

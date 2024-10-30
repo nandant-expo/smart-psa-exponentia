@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between p-3" style="flex-direction: row;">
+<div id="lazy_container">
+    <video [src]="vidURL" controls></video>
+</div>
+<div *ngIf="notplayable && !loader" class="d-flex align-items-center" style="flex-direction: row;column-gap: 20px;">
+    <label>Video link has expired, please click on refresh icon to play again </label>
+    <div class="re-btn" (click)="refreshChat()"><i class="pi pi-refresh" style="font-size: 2rem;"></i></div>
+</div>
+<div  *ngIf="loader" class="d-flex" style="flex-direction: column;row-gap: 20px;align-items: center;">
+    <div><i class="pi pi-spin pi-spinner" style="font-size: 4rem;"></i></div>
+    <label>Please Wait!</label>
+</div>
+<div class="p-button-sm p-button-text" style="cursor: pointer;"  class="close" aria-label="Close" (click)="closeModal()">
+    <i class="pi pi-times"></i>
+</div>
+</div>

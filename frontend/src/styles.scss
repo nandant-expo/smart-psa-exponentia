@@ -1,0 +1,267 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import "prismjs/plugins/toolbar/prism-toolbar.css";
+@import "prismjs/themes/prism-okaidia";
+
+.p-menubar{
+    background: none !important;
+    border: none !important;
+    i{font-size: 24px;}
+}
+
+.breakcome-box{
+    background: none !important;
+    border: none !important;
+}
+
+.menu-active{
+    background: #EDD2FD !important;
+    color: #7C3AED !important;
+}
+.menu-box{
+    a{
+        border: none !important;
+        padding: 10px !important;
+        font-size: 14px;
+        font-weight: 400 !important;
+    }
+}
+
+.p-inputtext,.p-inputtext-sm {
+    padding: 6px !important;
+    font-size: 14px !important;
+}
+.p-chips-input-token{
+    padding: 0px !important;
+}
+.p-button.p-button-xs{
+    padding: 6px 10px !important;
+}
+.p-chips-token{
+    padding: 2px 6px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    span{
+        font-size: 14px;
+    }
+}
+
+.popover-header{
+    border-bottom: 1px solid #F5F8FA !important;
+    background: #fff !important;
+}
+.my-custom-popover-class{
+    border: none !important;
+    box-shadow: var(--bs-popover-box-shadow) !important;
+}
+.p-paginator-current{
+    font-size: 14px !important;
+}
+.p-paginator-element{
+    font-size: 12px !important;
+    min-width: 2rem !important;
+    height: 2rem !important;
+}
+.p-input-icon-left > .p-inputtext{
+    padding-left: 2.5rem !important;
+}
+.p-paginator{
+    border: none !important;
+}
+.p-dialog .p-dialog-footer button{
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+}
+.p-galleria .p-galleria-thumbnail-container{
+    background: none !important
+}
+.p-galleria-thumbnail-item-content img{
+    border-radius: 18px !important;
+    width: 120px !important;
+    height: auto !important;
+    max-height: 144px !important;
+    border: 1px solid #cccc;
+}
+.p-galleria-thumbnail-item-current img{
+    border: 1px solid #7C3AED !important;
+    box-shadow: 0 1px 3px #7C3AED;
+}
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev, .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next{
+    color: rgba(0, 0, 0, 0.3) !important;
+    background-color: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.26) !important;
+}
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-prev:hover, .p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-next:hover{
+    background: #7C3AED !important;
+    color: #f8f9fa !important;
+    border: none !important;
+}
+
+.p-galleria-thumbnail-item{
+    overflow: hidden !important;
+}
+.p-galleria .p-galleria-thumbnail-container .p-galleria-thumbnail-item-content:focus{
+    box-shadow: none !important;
+}
+.p-galleria-thumbnail-item{
+    opacity: 1 !important;
+}
+.p-chips-token{
+    word-break: break-word !important;
+}
+
+.p-tooltip-text{
+    padding: 10px !important;
+    font-size: 14px !important;
+}
+.modal-giant {
+    max-width: 98%;
+    height: 100%;
+}
+.modal-medium {
+  max-width: unset;
+  min-height: unset;
+  
+  @media (min-width: 1024px) {
+    max-width: 80%;
+    min-height: 80%;
+  }
+}
+// .d-block{
+//     overflow: hidden !important;
+// }
+.d-block::-webkit-scrollbar {
+    display: none;
+}
+
+.toggleBox{
+    div{
+        padding: 4px 58px !important;
+    }
+    div:focus{
+        box-shadow:none;
+    }
+}
+.toggledayBox{
+    div{
+        padding: 4px 10px !important;
+    }
+    div:focus{
+        box-shadow:none;
+    }
+}
+
+.toggleButton{
+    padding: 4px 16px !important;
+    span{
+        font-size: 12px !important;
+        font-weight: 400 !important;
+    }
+}
+.toggleButton:focus{
+    box-shadow: none !important;
+}
+
+.metadata-custom-accordion .p-accordion-header .p-accordion-header-link{
+    padding: 6px 10px !important;
+    font-size: 14px !important;
+}
+
+.custom-accordion .p-accordion-header .p-accordion-header-link{
+    padding: 10px 10px !important;
+    font-size: 16px !important;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
+
+.custom-accordion{
+    display: flex;
+    flex-direction: column;
+    row-gap: 11px;
+}
+
+.custom-accordion .p-accordion-content{
+    background: none !important;
+    border: none !important;
+    padding: 20px 0px !important;
+}
+
+.sqlquery.p-panel.p-panel-toggleable .p-panel-header{
+    padding: 0px !important;
+    background: none !important;
+}
+
+.sqlquery.p-panel .p-panel-content{
+    padding: 0px !important;
+}
+
+pre{
+    margin:0 !important;
+    border-top-left-radius: 0px !important;   
+    border-top-right-radius: 0px !important;
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item{
+    padding: 4px 4px !important; 
+}
+.p-datatable.p-datatable-sm .p-datatable-tfoot > tr > td{
+    padding: 0px !important;
+
+}
+// .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td{
+//     background: #fdf8ff !important;
+// }
+
+.p-overlaypanel{
+    z-index: 9999 !important;
+}
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 10px !important;
+    white-space: nowrap;
+}
+.p-galleria .p-galleria-item-nav .p-galleria-item-prev-icon, .p-galleria .p-galleria-item-nav .p-galleria-item-next-icon{
+    color: #7C3AED !important;
+}
+
+@media (max-width: 960px) {
+
+    .p-menubar-root-list{
+        width: 350px !important;
+    }
+    .p-galleria-thumbnail-item-content img{
+        width: auto !important;
+        height: auto !important;
+    }
+    .p-galleria .p-galleria-item-nav .p-galleria-item-prev-icon, .p-galleria .p-galleria-item-nav .p-galleria-item-next-icon{
+        color: #7C3AED !important;
+    }
+    .toggleBox{
+        div{
+            padding: 4px 46px !important;
+        }
+    }
+}
+
+.p-button:disabled {
+  cursor: not-allowed !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: darkgray;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #F36C4E;
+}

@@ -1,0 +1,207 @@
+<!-- For MOBILE and above -->
+<div class="mobile-wrapper" *ngIf="isMobile">
+  <div style="width: 100%;height: 100%;">
+    <div class="chat-pannel" [ngClass]="isCitationWindowOpen? 'chat-pannel-0-right-padding':''">
+      <div class="message-box">
+        <div class="d-flex justify-content-between" style="align-items: center;padding-bottom: 4px;">
+          <div class="text-resizer"><span class="title-20-600">Chat</span> {{title != ''? ' - ': ''}} <span
+              style="font-style: italic;font-weight: 600;color: #694485;">{{title}}</span></div>
+          <div title="export" class="export-icon-wrapper" (click)="saveAsTextFile()">
+            <i class="pi pi-file-export export-chat" style="cursor: pointer;"></i>
+          </div>
+        </div>
+        <div class="d-flex" style="flex-direction: column; row-gap: 15px;height: calc(100vh - 95px);"
+          *ngIf="(messageList.length == 0 && queryList.length == 0) && !errorInLoading && this.objId !='new'">
+          <table>
+            <tbody>
+              <tr>
+                <td style="padding: 10px;" align="right"><p-skeleton width="80%" height="60px"
+                    borderRadius="10px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;" align="right"><p-skeleton width="80%" height="60px"
+                    borderRadius="10px"></p-skeleton></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="message-list" #messageListBox (scroll)="checkEnd($event)"
+          *ngIf="(messageList.length != 0 || queryList.length != 0) && !errorInLoading">
+          <ng-container *ngIf="messageList.length != 0">
+            <app-chat-message-list
+              [messageList]="messageList"
+              [lastIndex]="0"
+              [chatFlow]="chat_flow"
+              [currentChatId]="objId"
+              (openCitationWindow)="openCitationWindow($event)"
+              (queryData)="queryData()"
+            ></app-chat-message-list>
+          </ng-container>
+          <ng-container *ngIf="queryList.length != 0">
+            <app-chat-message-list
+              [messageList]="queryList"
+              [lastIndex]="messageList.length"
+              [chatFlow]="chat_flow"
+              [currentChatId]="objId"
+              (openCitationWindow)="openCitationWindow($event)"
+              [querySent]="querySent"
+              (regenerateQuery)="regenerateQuery()"
+            ></app-chat-message-list>
+          </ng-container>
+          <div style="float: left;clear: both;">&nbsp;</div>
+        </div>
+        <div *ngIf="(messageList.length == 0 || queryList.length == 0) && errorInLoading" style="text-align: center;">
+          Sorry! Unable to load the chat.</div>
+        <div class="d-flex ask-a-question-wrapper">
+          <app-chat-ask-a-question [id]="objId" (queryData)="queryData()"></app-chat-ask-a-question>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div #myCitation class="citation-mobile-dialog-wrapper">
+    <p-dialog
+      [(visible)]="isCitationWindowOpen"
+      [appendTo]="myCitation"
+      [blockScroll]="true"
+      [closable]="false"
+      [dismissableMask]="true"
+      [draggable]="false"
+      [modal]="true"
+      [resizable]="false"
+      [showHeader]="false"
+    >
+      <div class="citation-pannel">
+        <div class="head-source-btn-wrapper">
+          <div class="citation-head">
+            <i class="pi pi-arrow-left" (click)="hideCitationPanel()"></i>
+            <div class="title-20-600">{{ chat_flow == 'general'? 'Citation' : 'Preview'}}</div>
+          </div>
+          <div class="source-btn-wrapper">
+            <div class="source-btn" (click)="openFile(sourceLink)">Access Source Document</div>
+          </div>
+        </div>
+        <div class="image-box">
+          <div class="container-box" *ngIf="chat_flow == 'general'">
+            <img width="100%" [src]="citationLink | safe: 'resourceUrl'" alt="citation" />
+          </div>
+          <div class="container-box" *ngIf="chat_flow != 'general'">
+            <ng-container *ngFor="let items of previewData">
+              <img class="page" [id]="'page_'+items?.chunk_number" width="100%"
+                [src]="items?.image_path | safe: 'resourceUrl'"
+                style="box-shadow: 0px 4px 4px 0px #C09AF46B;margin-bottom: 10px;" alt="citation" />
+            </ng-container>
+            <div
+              *ngIf="chat_flow != 'general' && previewData.length == 0"
+              class="txt-not-available-mob"
+            >
+              Sorry! Preview is not available
+            </div>
+          </div>
+        </div>
+      </div>
+    </p-dialog>
+  </div>
+</div>
+
+<!-- For LAPTOP and above -->
+<div class="splitter chat-message-box desktop-wrapper"  *ngIf="!isMobile">
+    <div id="first" [ngClass]="!isCitationWindowOpen? 'first-100':''">
+        <div
+          class="chat-pannel"
+          [ngClass]="isCitationWindowOpen? 'chat-pannel-0-right-padding': 'curve-top-bottom-right-borders'"
+        >
+            <div class="message-box" > 
+                <div class="d-flex justify-content-between" style="align-items: center;padding-bottom: 4px;">
+                    <div class="text-resizer"><span class="title-20-600">Chat</span> {{title != ''? ' - ': ''}} <span style="font-style: italic;font-weight: 600;color: #F36C4E;">{{title}}</span></div>
+                    <div title="export" (click)="saveAsTextFile()">
+                        <i class="pi pi-file-export export-chat" style="cursor: pointer;" ></i>
+                    </div>
+                </div>
+                <div class="d-flex" style="flex-direction: column; row-gap: 15px;height: calc(100vh - 95px);"  *ngIf="(messageList.length == 0 && queryList.length == 0) && !errorInLoading && this.objId !='new'"> 
+                    <table>
+                        <tbody>
+                            <tr><td style="padding: 10px;" align="right"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td></tr>
+                            <tr><td style="padding: 10px;"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td></tr>
+                            <tr><td style="padding: 10px;" align="right"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td></tr>
+                            <tr><td style="padding: 10px;"><p-skeleton width="80%" height="60px" borderRadius="10px"></p-skeleton></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="message-list" #messageListBox (scroll)="checkEnd($event)" *ngIf="(messageList.length != 0 || queryList.length != 0) && !errorInLoading">
+                    <ng-container *ngIf="messageList.length != 0">
+                        <app-chat-message-list
+                          [messageList]="messageList"
+                          [lastIndex]="0"
+                          [chatFlow]="chat_flow"
+                          [currentChatId]="objId"
+                          (openCitationWindow)="openCitationWindow($event)"
+                          (queryData)="queryData()"
+                        ></app-chat-message-list>
+                    </ng-container>
+                    <ng-container *ngIf="queryList.length != 0">
+                        <app-chat-message-list
+                          [messageList]="queryList"
+                          [lastIndex]="messageList.length"
+                          [chatFlow]="chat_flow"
+                          [querySent]="querySent"
+                          [currentChatId]="objId"
+                          (openCitationWindow)="openCitationWindow($event)"
+                          (regenerateQuery)="regenerateQuery()"
+                        ></app-chat-message-list>
+                    </ng-container>
+                    <div style="float: left;clear: both;">&nbsp;</div>
+                </div>
+                <div *ngIf="(messageList.length == 0 || queryList.length == 0) && errorInLoading" style="text-align: center;"> Sorry! Unable to load the chat.</div>
+                <div class="d-flex" style="flex-direction: column;">
+                    <app-chat-ask-a-question [id]="objId" (queryData)="queryData()" ></app-chat-ask-a-question>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="separator" *ngIf="isCitationWindowOpen"></div>
+    <div id="second" *ngIf="isCitationWindowOpen">
+        <div class="citation-pannel">
+            <div class="d-flex justify-content-between citation-head" >
+                <div class="title-20-600">{{ chat_flow == 'general'? 'Citation' : 'Preview'}}</div>
+                <div class="d-flex" style="column-gap: 15px;" *ngIf="chat_flow == 'general'">
+                    <div style="cursor: pointer;" title="Zoom Out" id="xyzw-zoom-out-button" (click)="initZoom()"><i class="pi pi-minus" style="font-size: 12px;"></i></div>
+                    <div style="cursor: pointer;" title="Reset Zoom" (click)="resetZoom()"><i class="pi pi-refresh" style="font-size: 12px;"></i></div>
+                    <div style="cursor: pointer;" title="Zoom In" id="xyzw-zoom-in-button" (click)="initZoom()"><i class="pi pi-plus" style="font-size: 12px;"></i></div>
+                    <div style="cursor: pointer;" title="Close Citation Window" (click)="closeCitationWindow()"><i class="pi pi-times" style="font-size: 12px;"></i></div>
+                </div>
+                <div class="d-flex" style="column-gap: 15px;" *ngIf="chat_flow != 'general'">
+                    <div style="cursor: pointer;" title="Zoom Out" id="xyzw-zoom-out-button" (click)="zoomInpdf()"><i class="pi pi-minus" style="font-size: 12px;"></i></div>
+                    <div style="cursor: pointer;" title="Reset Zoom" (click)="resetpdfZoom()"><i class="pi pi-refresh" style="font-size: 12px;"></i></div>
+                    <div style="cursor: pointer;" title="Zoom In" id="xyzw-zoom-in-button" (click)="zoomOutpdf()"><i class="pi pi-plus" style="font-size: 12px;"></i></div>
+                </div>
+            </div>
+            <div class="source-btn" (click)="openFile(sourceLink)">Access Source Document</div>
+            <div class="image-box" style="overflow: scroll;">
+                <div class="container-box" *ngIf="chat_flow == 'general'">
+                    <img id="picture" width="100%" [src]="citationLink | safe: 'resourceUrl'" alt="citation" />
+                </div>
+                <div class="container-box" *ngIf="chat_flow != 'general'">
+                    <ng-container *ngFor="let items of previewData">
+                        <img class="page" 
+                        [id]="'page_'+items?.chunk_number"  
+                        width="100%" 
+                        [src]="items?.image_path | safe: 'resourceUrl'" 
+                        style="box-shadow: 0px 4px 4px 0px #C09AF46B;margin-bottom: 10px;"
+                        alt="citation" />
+                    </ng-container>
+                </div>
+                <div *ngIf="chat_flow != 'general' && previewData.length == 0" style="    font-size: 12px;
+                font-weight: 600;
+                color: #df2828;">
+                  Oops! It looks like the source document has been updated, and the old version is no longer available for preview in the repository.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

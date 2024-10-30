@@ -1,0 +1,30 @@
+.dashboard-main-wrapper {
+  background: #fff;
+  border-radius: 18px;
+  height: 98%;
+
+  .dropdown-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 5px 0 0 0;
+  }
+}
+
+:host ::ng-deep {
+  .dashboard-main-wrapper {
+    .dropdown-wrapper {
+      .p-dropdown-items-wrapper {
+        max-height: unset !important;
+      }
+
+      .p-dropdown:not(.p-disabled):hover {
+        border-color: #F36C4E;
+      }
+
+      .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        background: lightgray;
+        color: #F36C4E;
+      }
+    }
+  }
+}

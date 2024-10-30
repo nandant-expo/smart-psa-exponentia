@@ -1,0 +1,178 @@
+<!-- For MOBILE and above -->
+<div class="mobile-wrapper">
+  <div class="input-files-buttons-wrapper">
+    <span class="p-input-icon-left ml-auto col-md-4 col-sm-12" style="width: 90%;"> 
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          class="p-inputtext-sm form-control"
+          placeholder="Search by File Title"
+          [formControl]="searchControl"
+        />
+    </span>
+    <div class="heading-files-wrapper">
+      <p class="txt-choose">Choose from existing files</p>
+       <span> Showing {{(filteredList$ | async)?.length}} entries</span>
+      <div class="files-wrapper" *ngIf="fileData.length; else noRecords">
+        <ng-container *ngFor="let fd of (filteredList$ | async); let i = index">
+          <div
+            class="file-wrapper"
+            [ngClass]="{ 'highlighted': i === highLightedIndex }"
+            (click)="onMobFileSelect(i, fd)"
+          >
+            <div class="img-wrapper">
+              <ng-container [ngSwitch]="fd?.file_type">
+                <img *ngSwitchCase="'pdf'" src="./assets/img/pdf.svg" />
+                <img *ngSwitchCase="'ppt'" src="./assets/img/ppt.svg" />
+                <img *ngSwitchCase="'pptx'" src="./assets/img/ppt.svg" />
+                <img *ngSwitchCase="'doc'" src="./assets/img/doc.svg" />
+                <img *ngSwitchCase="'docx'" src="./assets/img/doc.svg" />
+                <img *ngSwitchCase="'xls'" src="./assets/img/xlsx.svg" />
+                <img *ngSwitchCase="'xlsx'" src="./assets/img/xlsx.svg" />
+                <img *ngSwitchCase="'img'" src="./assets/img/img.svg" />
+                <img *ngSwitchCase="'video'" src="./assets/img/video.svg" />
+              </ng-container>
+            </div>
+            <div class="text-wrapper">
+              <div class="txt-title">
+                {{ fd.display_name }}
+              </div>
+              <div class="created-at-wrapper">
+                <span class="txt-created-at">Created at:</span>
+                <span class="created-date">{{ fd.uploaded_on | date: 'dd MMM YYYY, h:mm a' }}</span>
+              </div>
+              <div class="created-at-wrapper">
+                <span class="txt-created-at">File Source:</span>
+                <span class="created-date">{{ fd.file_source}}</span>
+              </div>
+              <div class="created-at-wrapper">
+                <span >File Status:</span>
+                <span >             
+                  <p-tag class="p-button-sm" icon="{{(fd?.status == 'Ready' || fd?.status == null) ? 'pi pi-check' : 'pi pi-spin pi-spinner'}}" severity="{{(fd?.status == 'Ready' || fd?.status == null) ? 'success' : 'warning'}}" value="{{ fd?.status == null ? 'Ready': fd?.status }}"></p-tag>
+                </span>
+              </div>
+              <hr class="file-separator">
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <ng-template #noRecords pTemplate="emptymessage">
+        <tr>
+            <td colspan="3">No records found.</td>
+        </tr>
+    </ng-template>
+      <div class="mob-buttons-wrapper">
+        <button
+          pButton
+          type="button"
+          label="Ok"
+          class="p-button-sm p-button-help me-2"
+          style="padding: 6px 40px !important;"
+          [disabled]="highLightedIndex === -1"
+          (click)="closeModal({id: this.selectedFile})"
+        >
+        </button>
+        <button
+          pButton
+          type="button"
+          label="Cancel"
+          class="p-button-sm p-button-outlined"
+          style="padding: 6px 20px !important;"
+          (click)="closeModal('cancel')"
+        ></button>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- For LAPTOP and above -->
+<div class="desktop-wrapper">
+  <div class="d-flex justify-content-between" style="align-items: center;">
+      <div>
+          <div class="title"> Choose from existing files</div>  
+      </div>
+      <div class="p-2" style="cursor: pointer;">
+          <div class="p-button-sm p-button-text"  class="close" aria-label="Close" (click)="closeModal('cancel')">
+          <i class="pi pi-times"></i>
+          </div>
+      </div>
+  </div>
+  <div class="modal-body">
+      <div class="d-flex" style="flex-direction: column;row-gap: 20px;">
+      <div>
+          <span class="p-input-icon-left ml-auto col-md-4 col-sm-12"> 
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" class="p-inputtext-sm form-control" (keypress)="searchItem($event)" (keyup)="searchItem($event); dt1.filterGlobal(serachStr, 'contains')" placeholder="Search by File Name, File Source and File Status" />
+          </span>
+          <span class="txt-showing-entries">
+            Showing {{dt1.totalRecords}} entries
+          </span>
+      </div>
+      <div class="progress-bar-wrapper">
+        <p-progressBar *ngIf="loading"  mode="indeterminate" [style]="{ height: '6px' }"></p-progressBar>
+      </div>
+      <div class="table-wrapper">
+        <p-table
+            #dt1
+            [value]="fileData"
+            [scrollable]="true"
+            scrollHeight="calc(100vh - 42vh)"
+            [paginator]="false"
+            [showCurrentPageReport]="true"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [styleClass]="'p-datatable-sm'"
+            (onFilter)="onFilter($event)"
+            [globalFilterFields]="['display_name', 'file_source','status', 'uploaded_on']"
+            >
+            <ng-template pTemplate="header">
+                <tr class="rowbox-wrap table-headers">
+                    <th pSortableColumn="display_name" style="width:30%;font-size: 14px;" alignFrozen="left" pFrozenColumn [frozen]="true" >File Name <p-sortIcon field="display_name"></p-sortIcon></th>
+                    <th pSortableColumn="uploaded_on" style="width:20%;font-size: 14px;">Created at<p-sortIcon field="uploaded_on"></p-sortIcon></th>
+                    <th pSortableColumn="file_source" style="width:10%;font-size: 14px;">File Source <p-sortIcon field="file_source"></p-sortIcon></th>
+                    <th pSortableColumn="status" style="width:15%;font-size: 14px;">File Status <p-sortIcon field="status"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-ppt>
+                <tr class="rowbox-wrap row-tr" [ngClass]="{'active': ppt._id == selectedFile}"  (click)="selectFile(ppt)">
+                    <td alignFrozen="left" pFrozenColumn [frozen]="true" class="minimize-text" title="{{ppt.display_name}}">
+                        <div class="d-flex">
+                          <div>
+                            <span *ngIf="ppt.file_type == 'pdf'"><img src="./assets/img/pdf.svg" style="width: 24px;height: 24px;" /></span>
+                            <span *ngIf="ppt.file_type == 'ppt' || ppt.file_type == 'pptx'"><img src="./assets/img/ppt.svg" style="width: 24px;height: 24px;" /></span>
+                            <span *ngIf="ppt.file_type == 'doc' || ppt.file_type == 'docx'"><img src="./assets/img/doc.svg" style="width: 24px;height: 24px;" /></span>
+                            <span *ngIf="ppt.file_type == 'xlsx' || ppt.file_type == 'xls'"><img src="./assets/img/xlsx.svg" style="width: 24px;height: 24px;" /></span>
+                            <span *ngIf="ppt.file_type == 'img'"><img src="./assets/img/img.svg" style="width: 24px;height: 24px;" /></span>
+                            <span *ngIf="ppt.file_type == 'video'"><img src="./assets/img/video.svg" style="width: 24px;height: 24px;" /></span>
+                        </div>
+                            <div>&nbsp;{{ppt.display_name}}</div>
+                        </div>
+                    </td>
+                    <td>{{ (getDateFormated(ppt?.uploaded_on) | date:'d, MMM YYYY h:mm a') || '—' }}</td>
+                    <td class="minimize-text" title="{{ppt.file_source}}">{{ppt.file_source}}</td>
+                    <td>
+                      <p-tag icon="{{(ppt?.status == 'Ready' || ppt?.status == null) ? 'pi pi-check' : 'pi pi-spin pi-spinner'}}" severity="{{(ppt?.status == 'Ready' || ppt?.status == null) ? 'success' : 'warning'}}" value="{{ ppt?.status == null ? 'Ready': ppt?.status }}"></p-tag>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="4">No records found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+      </div>
+      <div>
+          <div class="d-flex justify-content-end">
+            <div class="btn-okay-wrapper">
+              <button pButton type="button" label="Ok" [disabled]="selectedFile == null" class="p-button-sm p-button-help me-2" style="padding: 6px 40px !important;" (click)="closeModal({id: this.selectedFile})"></button>
+            </div>
+              <div class="btn-cancel-wrapper">
+                <button pButton type="button" label="Cancel" class="p-button-sm p-button-outlined" style="padding: 6px 20px !important;" (click)="closeModal('cancel')"></button>
+              </div>
+          </div>
+      </div>
+      </div>
+  </div>
+</div>
+<p-toast></p-toast>

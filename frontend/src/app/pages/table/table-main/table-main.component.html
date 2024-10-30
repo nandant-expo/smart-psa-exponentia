@@ -1,0 +1,325 @@
+<div class="table-main-wrapper">
+  <div class="table-wrapper">
+    <div
+    >
+      <div
+        style="padding: 5px 15px 15px 15px;"
+      >
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="check-upto-wrapper">
+            <i class="pi pi-check-circle"></i>
+            <div class="upto-wrapper">
+              Upto
+              <span class="txt-date">
+                {{ currentDateTime | date: 'dd LLL y, hh:mm aaa' }}
+              </span>
+            </div>
+          </div>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              class="p-inputtext-sm form-control txt-search"
+              placeholder="Search here ..."
+              (keypress)="searchItem($event)"
+              (keyup)="searchItem($event); dt1.filterGlobal(serachStr, 'contains')"
+            />
+          </span>
+        </div>
+      </div>
+
+      <p-progressBar
+        *ngIf="loading"
+        mode="indeterminate"
+        [style]="{ height: '6px' }"
+      ></p-progressBar>
+      <p-table
+        #dt1
+        [value]="cleanTableData"
+        [paginator]="true"
+        [rows]="tableRows"
+        [scrollable]="true"
+        [showCurrentPageReport]="true"
+        [tableStyle]="{ 'min-width': '300rem' }"
+        [styleClass]="'p-datatable-sm'"
+        [globalFilterFields]="
+          [
+            'sr_no',
+            'Contract Unique Identifier',
+            'Contract Agreed Date',
+            'Automatic Alert Date',
+            'Country associated with contract',
+            'Date of contract creation',
+            'Currency used in contract',
+            'Effective contract date',
+            'Date Reminder',
+            'Type of contract',
+            'Contract Failure Legal Jurisdiction',
+            'Person/Entity Manager',
+            'External contractor',
+            'total mmonetary value',
+            'Contract Termination date',
+            'Date of termination/prolongation decision',
+            'Timespan for termination process',
+            'type of termination',
+            'Permanent terms'
+          ]
+        "
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      >
+        <ng-template pTemplate="header">
+          <tr class="rowbox-wrap">
+            <th
+              pFrozenColumn
+            >
+              Sr. No.
+            </th>
+            <th
+              pFrozenColumn
+            >
+              Contract ID
+            </th>
+            <th
+            >
+              Agreed On Date
+            </th>
+            <th
+            >
+              Automatic Alert Date
+            </th>
+            <th
+            >
+              Country
+            </th>
+            <th
+            >
+              Creation Date
+            </th>
+            <th
+            >
+              Currency
+            </th>
+            <th
+            >
+              Effective Date
+            </th>
+            <th
+            >
+              Evergreen Reminder Date
+            </th>
+            <th
+            >
+              Kind
+            </th>
+            <th
+            >
+              Legal Jurisdiction
+            </th>
+            <th
+            >
+              Operator
+            </th>
+            <th
+            >
+              Other Contractor Name
+            </th>
+            <th
+            >
+              Sum Total Values
+            </th>
+            <th
+            >
+              Terminated Date
+            </th>
+            <th
+            >
+              Termination Prolongation Date
+            </th>
+            <th
+            >
+              Termination Timespan
+            </th>
+            <th
+            >
+              Termination Type
+            </th>
+            <th
+            >
+              Terms of Payment
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-td let-i="rowIndex">
+          <tr class="rowbox-wrap">
+            <!-- Sr. No. -->
+            <td
+              pFrozenColumn
+              [title]="(i+1) || '—'"
+            >
+              <div class="d-flex">
+                <div>&nbsp;{{ (i+1) || '—'}}</div>
+              </div>
+            </td>
+
+            <!-- Contract ID -->
+            <td
+              pFrozenColumn
+              [title]="td['Contract Unique Identifier'] || '—'"
+            >
+              {{ td['Contract Unique Identifier'] || '—' }}
+            </td>
+
+            <!-- Agreed On Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Contract Agreed Date'] || '—'"
+            >
+              {{ td['Contract Agreed Date'] || '—'}}
+            </td>
+
+            <!-- Automatic Alert Date -->
+            <td
+              [title]="td['Automatic Alert Date'] || '—'"
+            >
+              {{ td['Automatic Alert Date'] || '—' }}
+            </td>
+
+            <!-- Country -->
+            <td
+              class="minimize-text"
+              [title]="td['Country associated with contract'] || '—'"
+            >
+              {{ td['Country associated with contract'] || '—'}}
+            </td>
+
+            <!-- Creation Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Date of contract creation'] || '—'"
+            >
+              {{ td['Date of contract creation'] || '—'}}
+            </td>
+
+            <!-- Currency -->
+            <td
+              class="minimize-text"
+              [title]="td['Currency used in contract'] || '—'"
+            >
+              {{ td['Currency used in contract'] || '—'}}
+            </td>
+
+            <!-- Effective Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Effective contract date'] || '—'"
+            >
+              {{ td['Effective contract date'] || '—'}}
+            </td>
+
+            <!-- Evergreen Reminder Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Date Reminder'] || '—'"
+            >
+              {{ td['Date Reminder'] || '—'}}
+            </td>
+
+            <!-- Kind -->
+            <td
+              class="minimize-text"
+              [title]="td['Type of contract'] || '—'"
+            >
+              {{ td['Type of contract'] || '—'}}
+            </td>
+
+            <!-- Legal Jurisdiction -->
+            <td
+              class="minimize-text"
+              [title]="td['Contract Failure Legal Jurisdiction'] || '—'"
+            >
+              {{ td['Contract Failure Legal Jurisdiction'] || '—'}}
+            </td>
+
+            <!-- Operator -->
+            <td
+              class="minimize-text"
+              [title]="td['Person/Entity Manager'] || '—'"
+            >
+              {{ td['Person/Entity Manager'] || '—'}}
+            </td>
+
+            <!-- Other Contractor Name -->
+            <td
+              class="minimize-text"
+              [title]="td['External contractor'] || '—'"
+            >
+              {{ td['External contractor'] || '—'}}
+            </td>
+
+            <!-- Sum Total Values -->
+            <td
+              class="minimize-text"
+              [title]="
+                td['total mmonetary value'] != 'N.A' ?
+                (td['total mmonetary value'] | number) :
+                '—'
+              "
+            >
+              {{
+                td['total mmonetary value'] != 'N.A' ?
+                (td['total mmonetary value'] | number) :
+                'N.A'
+              }}
+            </td>
+
+            <!-- Termindated Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Contract Termination date'] || '—'"
+            >
+              {{ td['Contract Termination date'] || '—'}}
+            </td>
+
+            <!-- Termination Prolongation Date -->
+            <td
+              class="minimize-text"
+              [title]="td['Date of termination/prolongation decision'] || '—'"
+            >
+              {{ td['Date of termination/prolongation decision'] || '—'}}
+            </td>
+
+            <!-- Termination Timespan -->
+            <td
+              class="minimize-text"
+              [title]="td['Timespan for termination process'] || '—'"
+            >
+              {{ td['Timespan for termination process'] || '—'}}
+            </td>
+
+            <!-- Termination Type -->
+            <td
+              class="minimize-text"
+              [title]="td['type of termination'] || '—'"
+            >
+              {{ td['type of termination'] || '—'}}
+            </td>
+
+            <!-- Terms of Payment -->
+            <td
+              class="minimize-text"
+              [title]="td['Permanent terms'] || '—'"
+            >
+              {{ td['Permanent terms'] || '—'}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4">No records found</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

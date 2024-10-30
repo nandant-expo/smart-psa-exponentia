@@ -1,0 +1,22 @@
+<div #mainWrapper class="main-wrapper">
+    <div
+      class="chat-history-wrapper"
+      *ngIf="!isMobile"
+    >
+      <app-chat-history-list></app-chat-history-list>
+    </div>
+    <div class="router-outlet-wrapper"><router-outlet></router-outlet></div>
+    <div
+      class="sidebar-wrapper"
+      *ngIf="isMobile"
+    >
+      <p-sidebar
+        [appendTo]="mainWrapper"
+        [blockScroll]="true"
+        [modal]="false"
+        [(visible)]="isChatHistoryVisible"
+      >
+        <app-chat-history-list></app-chat-history-list>
+      </p-sidebar>
+    </div>
+</div>

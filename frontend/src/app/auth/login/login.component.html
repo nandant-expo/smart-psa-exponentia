@@ -1,0 +1,59 @@
+<div *ngIf="!hasadError" class="d-flex flex-direction-column justify-content-between flex-wrapper">
+  <div  class="d-flex justify-content-center align-items-center box1">
+  </div>
+  <div class="d-flex flex-column justify-content-center align-items-center box2">
+    <img alt="Logo" src="./assets/img/logo-2-light.jpg" style="background: rgba(0, 0, 0, 0.5); max-width: 200px; max-height: 63px;"/>
+    <div class="col-10">
+      <h3>Login</h3>
+      <label>Welcome  to Smart PSA</label>
+      <div class="col-lg-10 col-md-10 col-sm-12 mt-4">
+        
+      <div class="text-center mt-3 btn-sign-in-with-microsoft-wrapper">
+        <button pButton type="button" style="justify-content: center;" class="p-button-sm p-button-outlined col-12" (click)="adlogin()">
+          <ng-container *ngIf="(isLoadingAD$ | async)">
+            <span class="indicator-progress" [style.display]="'block'">
+              &nbsp; Please wait...
+              <span
+                class="spinner-border spinner-border-sm align-middle ms-2"
+              ></span>
+            </span>
+          </ng-container>
+          <ng-container *ngIf="!(isLoadingAD$ | async)">
+            <span class="indicator-label"> 
+              <img alt="logo" src="./assets/img/microsoft-5.svg" style="width: 18px;margin-right: 10px;" />
+              <span class="ml-2 font-bold">Sign In with Microsoft</span>
+            </span>
+          </ng-container>
+        </button>
+      </div>     
+    
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="hasadError">
+  <div class="d-flex" style="flex-direction: column;justify-content: space-between;height:100vh;padding: 20px;">
+    <div class="d-flex mt-5" style="flex-direction: column;align-items: center; row-gap: 20px;">
+      <div class="logo-box"><img alt="Logo" src="./assets/img/logo-dark.png" style="width: 100%;" ></div>
+      <div class="info-box">
+        <div class="d-flex" style="align-items: center;justify-content: space-between;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M7.68 18L12 13.68L16.32 18L18 16.32L13.68 12L18 7.68L16.32 6L12 10.32L7.68 6L6 7.68L10.32 12L6 16.32L7.68 18ZM12 24C10.34 24 8.78 23.6848 7.32 23.0544C5.86 22.424 4.59 21.5692 3.51 20.49C2.43 19.41 1.5752 18.14 0.9456 16.68C0.316 15.22 0.0008 13.66 0 12C0 10.34 0.3152 8.78 0.9456 7.32C1.576 5.86 2.4308 4.59 3.51 3.51C4.59 2.43 5.86 1.5752 7.32 0.9456C8.78 0.316 10.34 0.0008 12 0C13.66 0 15.22 0.3152 16.68 0.9456C18.14 1.576 19.41 2.4308 20.49 3.51C21.57 4.59 22.4252 5.86 23.0556 7.32C23.686 8.78 24.0008 10.34 24 12C24 13.66 23.6848 15.22 23.0544 16.68C22.424 18.14 21.5692 19.41 20.49 20.49C19.41 21.57 18.14 22.4252 16.68 23.0556C15.22 23.686 13.66 24.0008 12 24ZM12 21.6C14.68 21.6 16.95 20.67 18.81 18.81C20.67 16.95 21.6 14.68 21.6 12C21.6 9.32 20.67 7.05 18.81 5.19C16.95 3.33 14.68 2.4 12 2.4C9.32 2.4 7.05 3.33 5.19 5.19C3.33 7.05 2.4 9.32 2.4 12C2.4 14.68 3.33 16.95 5.19 18.81C7.05 20.67 9.32 21.6 12 21.6Z" fill="#EF6131"/>
+          </svg>
+          <span style="color: #EF6131;font-size: 22px;font-weight: 600;white-space: nowrap;">This User does not exist</span>
+        </div>
+        <div style="color: rgba(0, 0, 0, 0.70);font-size: 18px;font-weight: 600;">Do you want to sign up?</div>
+        <div>
+          <button pButton type="button" class="p-button-sm col-12" style="justify-content: center;" (click)="userSignup()">
+            Continue as {{name}}
+          </button>
+          <button pButton type="button" style="justify-content: center;" class="p-button-sm p-button-outlined col-12 mt-3" (click)="hasadError=false">
+            Dismiss
+          </button>
+        </div>
+
+      </div>
+    </div>
+    <div><app-footer1></app-footer1></div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+.p-inputgroup-addon{
+    background: #fff !important;
+}
+.emptyerror{
+  color: #726b6b;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  background: #e5dfdf;
+  padding: 4px 15px;
+}
+
+.inputgroup{
+  display: flex;
+  border: 1px solid #a0a0a0;
+  border-radius: 5px;
+  align-items: center;
+  padding: 12px 0px 12px 12px;
+  background: #fff;
+  width: 100%;
+  #message-box {
+    resize: none;
+    width: 96%;
+    max-height: 180px;
+    height: 24px;
+    overflow: hidden;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-width: 0;
+  }
+  
+  .senticon{
+    cursor: pointer;
+  }
+  .senticon svg path{
+      fill: #0000003B !important;
+  }
+  
+  .activeicon svg path{
+      fill: #F36C4E !important;
+  }
+
+  .autogrow-box::-webkit-scrollbar {
+      width: 0px !important;
+      background: #fff !important;
+  }
+  #message-box::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+  }
+
+  /* Handle */
+  #message-box::-webkit-scrollbar-thumb {
+      background: darkgray;
+      border-radius: 10px;
+  }
+
+  /* Handle on hover */
+  #message-box::-webkit-scrollbar-thumb:hover {
+      background: #F36C4E;
+  }
+  textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    font-size: 16px !important;
+  }
+}

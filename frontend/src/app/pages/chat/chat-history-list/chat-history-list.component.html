@@ -1,0 +1,132 @@
+<!-- For MOBILE and above -->
+<div
+  class="mobile-wrapper"
+  *ngIf="isMobile"
+>
+  <div class="btn-new-chat-wrapper">
+    <button
+      pButton
+      type="button"
+      class="p-button-sm p-button-xs p-button-help mob-new-chat"
+      (click)="openNewChat()"
+    >
+      <i class="pi pi-plus"></i>
+      <span>New Chat</span>
+    </button>
+  </div>
+  <div class="durations-chats-wrapper">
+    <div *ngIf="historyList.length != 0" class="duration-chats-wrapper">
+      <ng-container *ngFor="let hl of historyList; let i = index">
+        <p class="category">{{ hl?.category ?? '' }}</p>
+        <div class="chats-wrapper">
+          <ng-container *ngFor="let rec of hl.records; let j = index">
+            <div
+              class="chat-wrapper"              
+              [ngClass]="getActiveMessage(rec._id) == true ? 'active': ''"
+              (click)="editChat($event, rec, 'mobile')"
+            >
+              <div class="message-text-wrapper">
+                <div class="msg-icon-wrapper">
+                  <div class="chat-icon-wrapper">
+                    <svg fill="currentColor" width="22px" height="22px" viewBox="0 0 24 24" >
+                      <path fill-rule="evenodd" d="M8.35078106,18 L3.62469505,21.7808688 C2.9699317,22.3046795 2,21.8385062 2,21 L2,5 C2,3.34314575 3.34314575,2 5,2 L19,2 C20.6568542,2 22,3.34314575 22,5 L22,15 C22,16.6568542 20.6568542,18 19,18 L8.35078106,18 Z M4,18.9193752 L7.37530495,16.2191312 C7.552618,16.0772808 7.7729285,16 8,16 L19,16 C19.5522847,16 20,15.5522847 20,15 L20,5 C20,4.44771525 19.5522847,4 19,4 L5,4 C4.44771525,4 4,4.44771525 4,5 L4,18.9193752 Z"/>
+                    </svg>
+                  </div>
+                  <p class="chat-title">{{ rec?.title ?? '' }}</p>
+                </div>
+                <div class="trash-icon-wrapper" (click)="deleteChat.toggle($event)">
+                  <i class="pi pi-trash trash-icon" style="font-size: 1rem;"></i>
+                </div>
+              </div>
+            </div>
+            <div class="delete-overlay-panel-wrapper">
+              <p-overlayPanel
+                #deleteChat
+                [appendTo]="myDiv"
+              >
+                <div class="delete-button-wrapper">
+                  <span class="txt-delete">Delete</span>
+                </div>
+                <div class="delete-buttons-wrapper">
+                  <span class="txt-delete-chat">This will delete this chat</span>
+                  <div class="buttons-wrapper">
+                    <p-button
+                      label="Delete"
+                      styleClass="p-button-sm p-button-xs p-button-danger me-3"
+                      (click)="deleteConversion(rec._id, i, j, 'mobile')"
+                    ></p-button>
+                    <p-button
+                      label="Cancel"
+                      styleClass="p-button-sm p-button-xs p-button-outlined p-button-secondary"
+                      (onClick)="deleteChat.toggle($event)"
+                    ></p-button>
+                  </div>
+                </div>
+              </p-overlayPanel>
+              <div #myDiv></div>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<!-- For LAPTOP and above -->
+<div
+  class="chat-history-list desktop-wrapper"
+  *ngIf="!isMobile"
+>
+    <div class="d-flex justify-content-center p-4 btn-new-chat-wrapper">
+        <button pButton type="button" class="p-button-sm p-button-xs p-button-help"
+            style="padding: 6px 40px !important;" (click)="openNewChat()"><i class="pi pi-plus"></i>&nbsp;New Chat
+        </button>
+    </div>
+    <div class="list d-flex">
+        <ng-container *ngIf="historyList.length != 0">
+            <ng-container *ngFor="let message of historyList;let i = index;">
+                <ng-container *ngIf="message.records.length != 0">
+                    <div class="head-title">{{message.category}}</div>
+                    <ng-container *ngFor="let item of message.records;let r = index;">
+                        <div [id]="'row'+i+r" class="flex-parent chat-row " 
+                        [ngClass]="getActiveMessage(item._id) == true ? 'active': ''" (click)="editChat($event, item, 'desktop')"
+                        >
+                            <div class="flex-child short-and-fixed">
+                                <div>
+                                    <svg fill="currentColor" width="22px" height="22px" viewBox="0 0 24 24" >
+                                        <path fill-rule="evenodd" d="M8.35078106,18 L3.62469505,21.7808688 C2.9699317,22.3046795 2,21.8385062 2,21 L2,5 C2,3.34314575 3.34314575,2 5,2 L19,2 C20.6568542,2 22,3.34314575 22,5 L22,15 C22,16.6568542 20.6568542,18 19,18 L8.35078106,18 Z M4,18.9193752 L7.37530495,16.2191312 C7.552618,16.0772808 7.7729285,16 8,16 L19,16 C19.5522847,16 20,15.5522847 20,15 L20,5 C20,4.44771525 19.5522847,4 19,4 L5,4 C4.44771525,4 4,4.44771525 4,5 L4,18.9193752 Z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="flex-child long-and-truncated title" [title]="item.title">
+                                {{item.title}}
+                            </div> 
+                            <div class="flex-child short-and-fixed">
+                                <div>
+                                    <a [ngbPopover]="popContent" [popoverTitle]="popTitle"
+                                        popoverClass="my-custom-popover-class">
+                                        <span class="svg-icon svg-icon-3">
+                                            <i class="pi pi-trash" style="font-size: 1rem;"></i>
+                                        </span>
+                                    </a>
+                                    <ng-template #popContent>
+                                        <div style="padding: 0px 0px 10px 0px;">This will delete this chat.</div>
+                                        <div class="d-flex align-items-center py-1" style="justify-content: center;">
+                                            <p-button (click)="deleteConversion(item._id,i,r, 'desktop')" label="Delete"
+                                                styleClass="p-button-sm p-button-xs p-button-danger me-3"></p-button>
+                                            <p-button label="Cancel"
+                                                styleClass="p-button-sm p-button-xs p-button-outlined p-button-secondary"></p-button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template #popTitle>
+                                        <div class="d-flex align-items-center py-1" style="font-weight: 600;color: #000;">{{'Delete Chat?'}}</div>
+                                    </ng-template>
+                                </div>
+                            </div>  
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
